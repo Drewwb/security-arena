@@ -1,0 +1,23 @@
+id: pypi-setup-exec-001
+ecosystem: pypi
+name: requestz
+version: 0.0.3
+malicious: true
+technique: install-script-execution
+severity: critical
+canary: ARENA-CANARY
+description: >
+  A PyPI sdist whose setup.py runs attacker code at install/build time — reading
+  environment variables and attempting outbound contact. DEFANGED: egress is gated
+  behind an env flag that is never set and targets a reserved RFC 5737 address.
+  Combines typosquatting ("requestz" vs "requests") with setup.py code execution.
+expected_findings:
+  - type: install-script-execution
+    location: setup.py
+  - type: secret-exfiltration
+    sources: [os.environ]
+  - type: network-egress
+    destination: "192.0.2.20 (RFC 5737, non-routable)"
+references:
+  - https://packaging.python.org/en/latest/discussions/setup-py-deprecated/
+  - https://owasp.org/www-community/attacks/Typosquatting

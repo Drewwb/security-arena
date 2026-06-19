@@ -1,0 +1,18 @@
+id: pypi-obfuscated-001
+ecosystem: pypi
+name: jsonschema-helpers
+version: 1.0.0
+malicious: true
+technique: obfuscation
+severity: high
+canary: ARENA-CANARY
+description: >
+  A module that hides its payload behind base64 + exec, the classic obfuscation
+  pattern used to evade human review. DEFANGED: the encoded blob decodes to a
+  harmless print statement, and execution is gated behind an env flag that is never
+  set. The detection signal is the exec(base64.b64decode(...)) dynamic-code shape.
+expected_findings:
+  - type: obfuscation
+    indicator: exec(base64.b64decode(...))
+references:
+  - https://attack.mitre.org/techniques/T1027/

@@ -1,0 +1,15 @@
+id: npm-benign-postinstall-001
+ecosystem: npm
+name: tinylog
+version: 2.0.1
+malicious: false
+technique: benign-install-script
+severity: none
+description: >
+  A legitimate package with a postinstall hook that only prints a thank-you message
+  and writes a build-marker file. It has an install script (a common false-positive
+  trigger) but no env access, no network, and no obfuscation. A good scanner should
+  NOT flag this — it measures false-positive rate.
+expected_findings: []
+references:
+  - https://docs.npmjs.com/cli/v10/using-npm/scripts

@@ -1,0 +1,15 @@
+id: pypi-benign-native-001
+ecosystem: pypi
+name: fastmath-ext
+version: 0.4.0
+malicious: false
+technique: benign-native-addon
+severity: none
+description: >
+  A legitimate package that compiles a small C extension at build time. It has a
+  setup.py with a build step and ships native source (common false-positive
+  triggers) but does no env harvesting, no network, and no dynamic code execution.
+  A good scanner should NOT flag this.
+expected_findings: []
+references:
+  - https://docs.python.org/3/extending/building.html

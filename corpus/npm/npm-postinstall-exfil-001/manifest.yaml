@@ -1,0 +1,24 @@
+id: npm-postinstall-exfil-001
+ecosystem: npm
+name: color-parser-pro
+version: 1.2.3
+malicious: true
+technique: secret-exfiltration
+severity: critical
+canary: ARENA-CANARY
+description: >
+  A package whose postinstall hook harvests environment variables (including an
+  npm token) and would POST them to a command-and-control host. DEFANGED: the
+  network sink targets a reserved RFC 5737 address and is gated behind an env flag
+  that is never set, so nothing is transmitted. Exercises the classic install-time
+  exfiltration chain: lifecycle hook -> env read -> network egress.
+expected_findings:
+  - type: install-script-execution
+    hook: postinstall
+  - type: secret-exfiltration
+    sources: [process.env, NPM_TOKEN]
+  - type: network-egress
+    destination: "192.0.2.10 (RFC 5737, non-routable)"
+references:
+  - https://docs.npmjs.com/cli/v10/using-npm/scripts
+  - https://www.cisa.gov/news-events/news/securing-software-supply-chain

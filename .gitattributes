@@ -1,0 +1,6 @@
+# Corpus samples are scanner inputs — keep byte-for-byte deterministic line endings.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
+*.gz binary
+*.zip binary

@@ -1,0 +1,17 @@
+id: npm-typosquat-001
+ecosystem: npm
+name: expresss
+version: 4.18.0
+malicious: true
+technique: typosquatting
+severity: high
+canary: ARENA-CANARY
+description: >
+  A package named "expresss" (triple-s) impersonating the popular "express" web
+  framework to catch install typos. The code is an inert stub; the malicious signal
+  is the deceptive name plus a description that mimics the real package.
+expected_findings:
+  - type: typosquatting
+    target: express
+references:
+  - https://owasp.org/www-community/attacks/Typosquatting

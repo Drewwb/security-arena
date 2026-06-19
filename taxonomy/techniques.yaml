@@ -1,0 +1,88 @@
+# Supply-chain attack technique catalog.
+# Each sample's manifest references one of these `id`s via its `technique` field.
+# References map to the OpenSSF Supply-Chain Threats taxonomy and, where applicable, MITRE ATT&CK.
+
+version: 1
+
+techniques:
+  - id: typosquatting
+    name: Typosquatting / namesquatting
+    description: >
+      A package published under a name confusingly similar to a popular package
+      (character swap, omission, hyphenation) to catch install typos.
+    openssf: [SC-Typosquatting]
+    mitre: [T1195.002]
+
+  - id: dependency-confusion
+    name: Dependency confusion
+    description: >
+      A public package shadows an organization's internal/private package name so
+      resolvers fetch the attacker copy.
+    openssf: [SC-DependencyConfusion]
+    mitre: [T1195.002]
+
+  - id: install-script-execution
+    name: Malicious install-script execution
+    description: >
+      Code that runs automatically at install time via npm lifecycle hooks
+      (pre/postinstall) or PyPI setup.py / build backends.
+    openssf: [SC-MaliciousMaintainer]
+    mitre: [T1195.002, T1059]
+
+  - id: secret-exfiltration
+    name: Secret / environment exfiltration
+    description: >
+      Reads environment variables, credential files, SSH keys, or cloud tokens and
+      attempts to send them off-host.
+    openssf: [SC-DataExfiltration]
+    mitre: [T1552, T1041]
+
+  - id: reverse-shell
+    name: Reverse shell / C2 beacon
+    description: >
+      Establishes (or attempts to establish) an outbound interactive shell or
+      command-and-control channel.
+    openssf: [SC-MaliciousCode]
+    mitre: [T1059, T1071]
+
+  - id: obfuscation
+    name: Obfuscated / encoded payload
+    description: >
+      Payload hidden via base64/hex encoding, eval of dynamically built strings,
+      or heavy minification to evade review.
+    openssf: [SC-MaliciousCode]
+    mitre: [T1027]
+
+  - id: cryptominer
+    name: Cryptominer drop
+    description: >
+      Downloads or launches a coin-mining payload, often gated on CI/container envs.
+    openssf: [SC-MaliciousCode]
+    mitre: [T1496]
+
+  - id: protestware
+    name: Protestware / sabotage
+    description: >
+      Maintainer-introduced behavior that intentionally degrades, defaces, or
+      destroys based on geolocation, date, or other conditions.
+    openssf: [SC-MaliciousMaintainer]
+    mitre: [T1485]
+
+  # Benign decoys are labeled with one of these so false positives are attributable.
+  - id: benign-minified
+    name: Benign minified code
+    description: Legitimately minified/bundled library code that can look obfuscated.
+    openssf: []
+    mitre: []
+
+  - id: benign-install-script
+    name: Benign install script
+    description: A legitimate, harmless pre/postinstall or setup.py side effect.
+    openssf: []
+    mitre: []
+
+  - id: benign-native-addon
+    name: Benign native addon
+    description: A package that legitimately compiles/ships native code or binaries.
+    openssf: []
+    mitre: []

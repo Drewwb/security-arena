@@ -1,0 +1,11 @@
+{
+  "_comment": "Example output for the jsonimport adapter. Keyed by sample id. Only 'flagged' is required per entry; score/findings are optional. Run: python -m arena run --adapter jsonimport --config findings=examples/findings.example.json  then  python -m arena score --adapter jsonimport",
+
+  "npm-typosquat-001":          { "flagged": true,  "score": 0.85, "findings": [{ "type": "typosquatting", "target": "express" }] },
+  "npm-postinstall-exfil-001":  { "flagged": true,  "score": 0.97, "findings": [{ "type": "install-script-execution" }, { "type": "secret-exfiltration" }] },
+  "npm-benign-postinstall-001": { "flagged": false, "score": 0.12 },
+
+  "pypi-setup-exec-001":        { "flagged": true,  "score": 0.93, "findings": [{ "type": "install-script-execution" }] },
+  "pypi-obfuscated-001":        { "flagged": false, "score": 0.40, "findings": [] },
+  "pypi-benign-native-001":     { "flagged": true,  "score": 0.55, "findings": [{ "type": "native-code" }] }
+}
