@@ -70,6 +70,23 @@ python -m arena run --adapter jsonimport --config findings=path/to/findings.json
 python -m arena score --adapter semgrep
 ```
 
+## Scanner coverage — an important nuance
+
+Different scanners operate at different layers, and this corpus deliberately puts the
+malicious code **inside each package's own source files**:
+
+- **Source/SAST scanners** (Semgrep, custom rules) analyze the actual `.js`/`.py`
+  files, so they engage with every sample here directly.
+- **Dependency-reputation scanners** (Socket, OSV-Scanner, Snyk) primarily score a
+  project's *declared dependencies* in manifest files. Because each sample is a
+  self-contained package with **no declared dependencies**, these tools mostly see
+  only manifest-level signals (e.g. the presence of an install script) rather than the
+  payload in `install.js` / `setup.py`.
+
+This is expected, not a bug — it's exactly the kind of blind spot an arena should make
+visible. A complete corpus should eventually include *dependency-style* samples too
+(a host project that pulls a flagged dependency) to exercise the reputation layer.
+
 ## Adding your scanner
 
 Drop a module in `arena/adapters/`. See [arena/adapters/base.py](arena/adapters/base.py) for the
